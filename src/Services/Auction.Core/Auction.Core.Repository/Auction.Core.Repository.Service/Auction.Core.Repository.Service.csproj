@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Auction.Core.Base\Auction.Core.Base.Common\Auction.Core.Base.Common.csproj" />
+    <ProjectReference Include="..\Auction.Core.Repository.Common\Auction.Core.Repository.Common.csproj" />
+  </ItemGroup>
+
+</Project>

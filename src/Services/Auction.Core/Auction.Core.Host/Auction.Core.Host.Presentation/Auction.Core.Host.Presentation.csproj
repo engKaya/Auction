@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Auction.Core.Base\Auction.Core.Base.Common\Auction.Core.Base.Common.csproj" />
+    <ProjectReference Include="..\..\Auction.Core.Logging\Auction.Core.Logging.Common\Auction.Core.Logging.Common.csproj" />
+    <ProjectReference Include="..\..\Auction.Core.Repository\Auction.Core.Repository.Common\Auction.Core.Repository.Common.csproj" />
+    <ProjectReference Include="..\..\Auction.Core.Repository\Auction.Core.Repository.Service\Auction.Core.Repository.Service.csproj" />
+    <ProjectReference Include="..\Auction.Core.Host.Service\Auction.Core.Host.Service.csproj" />
+  </ItemGroup>
+
+</Project>
