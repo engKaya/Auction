@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Auction.Core\Auction.Core.Repository\Auction.Core.Repository.Service\Auction.Core.Repository.Service.csproj" />
+    <ProjectReference Include="..\Auction.User.Base\Auction.User.Base.csproj" />
+    <ProjectReference Include="..\Auction.User.Common\Auction.User.Common.csproj" />
+  </ItemGroup>
+
+</Project>
