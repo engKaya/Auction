@@ -363,5 +363,10 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /src/Services/Auction.Core/Auction.Core.Host/Auction.Core.Host.Presentation/appsettings.json
-/src/Services/Auction.Core/Auction.Core.Host/Auction.Core.Host.Presentation/appsettings.test.json
+/src/Services/Auction.Core/Auction.Core.Host/Auction.Core.Host.Presentation/appsettings.Test.json
+/src/Services/Auction.Core/Auction.Core.Host/Auction.Core.Host.Presentation/appsettings.Development.json
 serilogs/
+/src/Services/Auction.Core/Auction.Core.Host/Auction.Core.Host.Presentation/appsettings.Dev.json
+/src/Services/Auction.Core/Auction.Core.Host/Auction.Core.Host.Presentation/appsettings.json
+/src/Services/Auction.Core/Auction.Core.Host/Auction.Core.Host.Presentation/appsettings.Dev.json
+/src/Services/Auction.Core/Auction.Core.Host/Auction.Core.Host.Presentation/appsettings.Test.json
