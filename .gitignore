@@ -364,3 +364,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /src/Services/Auction.Core/Auction.Core.Host/Auction.Core.Host.Presentation/appsettings.json
 /src/Services/Auction.Core/Auction.Core.Host/Auction.Core.Host.Presentation/appsettings.test.json
+serilogs/
