@@ -7,34 +7,34 @@ namespace Auction.Core.Host.Service.HostExtensions
 {
     public static class HostBuilderHelper 
     {
-        public static IHost ConfigureHost(this IHost host, ILogger logger) 
+        public static IHost ConfigureHost(this IHost host) 
         { 
-            var assemblies = AssemblyBuilderHelper.GetAssembliesFromDll(logger);
+            var assemblies = AssemblyBuilderHelper.GetAssembliesFromDll();
 
             foreach (var assembly in assemblies)
             {
-                logger.LogWarning($"Looking For ${assembly.FullName}");
+                //logger.LogWarning($"Looking For ${assembly.FullName}");
 
                 var types = assembly.GetTypes().Where(t => t.GetInterfaces().Contains(typeof(IHostConfigurer)));
 
                 if (!types.Any())
                     continue;
 
-                logger.LogInformation($"{types.Count()} IHostConfigurer reference found");
+                //logger.LogInformation($"{types.Count()} IHostConfigurer reference found");
                 types.ToList().ForEach(x =>
                 {
-                    logger.LogWarning($"IHostConfigurer reference found on {x.FullName} ");
+                    //logger.LogWarning($"IHostConfigurer reference found on {x.FullName} ");
                 });
 
 
                 foreach (var type in types)
                 {
                     var configurer = (IHostConfigurer)Activator.CreateInstance(type);
-                    configurer.Configure(host, logger);
+                    configurer.Configure(host);
                 }
             }
 
-            logger.LogInformation("FindHostConfigurersAndExecute has finished");
+            //logger.LogInformation("FindHostConfigurersAndExecute has finished");
             return host;
         }
     }

@@ -8,9 +8,8 @@ namespace Auction.Core.Repository.Service.Services
 {
     internal class ConfigureService : IServiceConfigurer
     {
-        public void Configure(IServiceCollection services, ILogger logger)
-        {
-            services.AddEntityFrameworkSqlServer();
+        public void Configure(IServiceCollection services)
+        { 
             services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>)); 
         }
     }

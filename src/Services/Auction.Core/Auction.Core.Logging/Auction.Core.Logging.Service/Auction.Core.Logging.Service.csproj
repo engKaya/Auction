@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Auction.Core.Logging.Common\Auction.Core.Logging.Common.csproj" />
+  </ItemGroup>
+
 </Project>

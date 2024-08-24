@@ -8,13 +8,12 @@ namespace Auction.Core.Host.Service.Helpers
     public static class AssemblyBuilderHelper
     { 
         private static List<Assembly> _assembly = [];
-        public static List<Assembly> GetAssembliesFromDll(ILogger logger ) 
+        public static List<Assembly> GetAssembliesFromDll() 
         {
             if (_assembly.Count > 0)
                 return _assembly;
 
-            var hostPath = AppContext.BaseDirectory;
-            logger.LogInformation($"Path: {hostPath}");
+            var hostPath = AppContext.BaseDirectory; 
             var directory = new DirectoryInfo(hostPath);
             var entryPath = directory.GetDirectoryParent(6);
 
@@ -32,7 +31,7 @@ namespace Auction.Core.Host.Service.Helpers
              
              if (directory.Exists)
              { 
-                 logger.LogWarning($"{dllInfos.Count()} files found!.");
+                 //logger.LogWarning($"{dllInfos.Count()} files found!.");
                  foreach (var dll in dllInfos)
                  {
                      var ass = Assembly.LoadFrom(dll.Path);

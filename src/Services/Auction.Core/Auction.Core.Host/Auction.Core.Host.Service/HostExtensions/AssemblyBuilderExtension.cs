@@ -8,28 +8,22 @@ namespace Auction.Core.Host.Service.HostExtensions
 {
     public static class AssemblyBuilderExtension
     {
-        public static IServiceCollection FindAssemblyBuildersAndExecute(this IServiceCollection services, ILogger logger)
+        public static IServiceCollection FindAssemblyBuildersAndExecute(this IServiceCollection services)
         {
-            logger.LogInformation("FindAssemblyBuildersAndExecute has started");
-
-            var assemblies = AssemblyBuilderHelper.GetAssembliesFromDll(logger).Where(x=>x.FullName.Contains(".Service")).ToList();
+            var assemblies = AssemblyBuilderHelper.GetAssembliesFromDll().Where(x=>x.FullName.Contains(".Service")).ToList();
             foreach (var assembly in assemblies)
             {
-                logger.LogWarning($"Looking For ${assembly.FullName}");
 
                 var types = assembly.GetTypes().Where(t => t.IsSubclassOf(typeof(AssemblyBuilder)) && !t.IsAbstract);
                  
 
                 if (!types.Any())
-                {
-                    logger.LogInformation($"Any AssemblyBuilder reference couldn't found, continiuing");
                     continue;
-                }
 
-                logger.LogInformation($"{types.Count()} CoreAssemblyBuilder reference found");
+               // logger.LogInformation($"{types.Count()} CoreAssemblyBuilder reference found");
                 types.ToList().ForEach(x =>
                 {
-                    logger.LogWarning($"AssemblyBuilder reference found on {x.FullName} ");
+                    //logger.LogWarning($"AssemblyBuilder reference found on {x.FullName} ");
                 });
 
 

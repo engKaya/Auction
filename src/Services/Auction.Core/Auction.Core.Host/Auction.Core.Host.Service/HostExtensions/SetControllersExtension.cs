@@ -9,9 +9,9 @@ namespace Auction.Core.Host.Service.HostExtensions
 {
     public static class SetControllersExtension
     {
-        public static IServiceCollection SetControllers(this IServiceCollection services, ILogger logger)
+        public static IServiceCollection SetControllers(this IServiceCollection services)
         {
-            var assemblies = AssemblyBuilderHelper.GetAssembliesFromDll(logger).FindAll(x => x.FullName.Contains("Service") && !x.FullName.Contains("Core") && !x.FullName.Contains("Domain"));
+            var assemblies = AssemblyBuilderHelper.GetAssembliesFromDll().FindAll(x => x.FullName.Contains("Service") && !x.FullName.Contains("Core") && !x.FullName.Contains("Domain"));
             List<Assembly> serviceAssemblies  = new List<Assembly>();
 
             foreach (var assembly in assemblies)
@@ -21,7 +21,7 @@ namespace Auction.Core.Host.Service.HostExtensions
                     continue;
 
 
-                logger.LogInformation($"{types.Count()} Controller found in {assembly.FullName}");
+                //logger.LogInformation($"{types.Count()} Controller found in {assembly.FullName}");
                 serviceAssemblies.Add(assembly);
             } 
             

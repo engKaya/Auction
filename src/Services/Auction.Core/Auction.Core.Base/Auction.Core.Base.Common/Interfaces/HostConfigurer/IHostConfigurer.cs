@@ -5,6 +5,6 @@ namespace Auction.Core.Base.Common.Interfaces.HostConfigurer
 {
     public interface IHostConfigurer
     {
-        void Configure(IHost hostBuilder, ILogger logger);
+        void Configure(IHost hostBuilder);
     }
 }

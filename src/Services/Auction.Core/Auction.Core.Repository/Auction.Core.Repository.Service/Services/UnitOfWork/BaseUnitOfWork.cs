@@ -15,8 +15,7 @@ namespace Auction.Core.Repository.Service.Services.UnitOfWork
         public bool HasActiveTransaction => currentTransaction != null;
         public BaseUnitOfWork(T context, ILogger<BaseUnitOfWork<T>> _logger/*, IMediator mediator*/)
         {
-            this._dbContext = context;
-         //   this.mediator = mediator;
+            this._dbContext = context; 
             logger = _logger;
             currentTransaction = _dbContext.Database.BeginTransaction();
         }
@@ -63,7 +62,7 @@ namespace Auction.Core.Repository.Service.Services.UnitOfWork
 
         public async void Dispose()
         {
-            logger.LogInformation($"Disposing UnitOfWork.{nameof(_dbContext)}");
+            logger.LogInformation($"Disposing UnitOfWork.{_dbContext.GetType().FullName}"); 
             await _dbContext.DisposeAsync();
         }
     }
