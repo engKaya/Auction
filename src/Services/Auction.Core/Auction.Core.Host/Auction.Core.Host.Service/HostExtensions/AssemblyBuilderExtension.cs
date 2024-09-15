@@ -1,8 +1,6 @@
-﻿using Auction.Core.Base.Common.Assembly;
-using Auction.Core.Host.Common.Infastructure;
+﻿using Auction.Core.Host.Common.Infastructure;
 using Auction.Core.Host.Service.Helpers;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Auction.Core.Host.Service.HostExtensions
 {

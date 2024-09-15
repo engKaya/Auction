@@ -2,6 +2,7 @@
 using Auction.User.Base.DbContext;
 using Auction.User.Common.Infastructure.Repository;
 using Auction.User.Common.Infastructure.UnitOfWork;
+using Auction.User.Domain.Service.Handlers.Commands.RegisterUser;
 using Auction.User.Domain.Service.Infastructure.Repository;
 using Auction.User.Domain.Service.Infastructure.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,7 @@ namespace Auction.User.Service
     {
         public override void BuildServices(IServiceCollection services)
         {
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining(typeof(RegisterUserCommand)));
             services.AddScoped<IUserServiceUnitOfWork, UserServiceUnitOfWork>();
             services.AddScoped<IUserRepository, UserRepository>();
         }

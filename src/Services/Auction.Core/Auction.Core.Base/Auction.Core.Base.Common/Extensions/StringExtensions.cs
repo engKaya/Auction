@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Auction.Core.Base.Common.Helpers
+namespace Auction.Core.Base.Common.Extensions
 {
     public static class StringExtensions
     {
@@ -17,6 +17,6 @@ namespace Auction.Core.Base.Common.Helpers
         public static string ReturnRegExpressionResult(this string value, string regex)
         {
             return value.Trim().Length > 0 ? Regex.Match(value, regex).Value : value;
-        } 
+        }
     }
 }

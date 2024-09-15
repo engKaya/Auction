@@ -1,6 +1,10 @@
 ﻿using Auction.Core.Base.Common;
+using Auction.Core.Base.Common.Enums;
+using Auction.Core.Base.Common.Extensions;
 using Auction.Core.Base.Common.Helpers;
 using Auction.Core.Base.Common.Interfaces.ServiceConfigurers;
+using Auction.Core.Logging.Common.Interfaces;
+using Auction.Core.Logging.Service.Infastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -21,17 +25,21 @@ namespace Auction.Core.Logging.Service
             services.AddSerilog(cfg =>
             {
                 cfg.MinimumLevel.Information()
+                    .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", Serilog.Events.LogEventLevel.Warning)
                     .Enrich.FromLogContext()
                     .Enrich.WithProcessId()
                     .Enrich.WithProperty("ModuleName", moduleName)
                     .Enrich.WithMachineName()
-                    .WriteTo.Debug()
-                    .WriteTo.Console()
-                    .WriteTo.File($"serilogs/log{DateTime.Now.Ticks}.txt", rollingInterval: RollingInterval.Day)
+                    .WriteTo.Debug() 
                     .WriteTo.Elasticsearch(ConfigureElasticSink(moduleName, config, environment))
                     .Enrich.WithProperty("Environment", Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"))
                     .ReadFrom.Configuration(config);
+
+                if (ApplicationHelper.GetEnvironmentType() != EnvironmentType.Development)
+                    cfg.WriteTo.File($"serilogs/log{DateTime.Now.Ticks}.txt", rollingInterval: RollingInterval.Day);
             });
+
+            services.AddScoped<ITraceService, TraceService>(); 
         }
 
 
@@ -45,7 +53,7 @@ namespace Auction.Core.Logging.Service
                 AutoRegisterTemplate = true,
                 IndexFormat = indexFormat.RemoveTurkishChars(),
                 DetectElasticsearchVersion = true,
-                ConnectionTimeout = TimeSpan.FromSeconds(20), 
+                ConnectionTimeout = TimeSpan.FromSeconds(20),
                 AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv6,
                 NumberOfShards = 2,
                 NumberOfReplicas = 1,
@@ -55,8 +63,8 @@ namespace Auction.Core.Logging.Service
                                                                EmitEventFailureHandling.RaiseCallback,
                 CustomFormatter = new ExceptionAsObjectJsonFormatter(renderMessage: true),
                 DeadLetterIndexName = "deadletterindex",
-                RegisterTemplateFailure = RegisterTemplateRecovery.IndexAnyway, 
+                RegisterTemplateFailure = RegisterTemplateRecovery.IndexAnyway,
             };
         }
-    } 
-} 
+    }
+}

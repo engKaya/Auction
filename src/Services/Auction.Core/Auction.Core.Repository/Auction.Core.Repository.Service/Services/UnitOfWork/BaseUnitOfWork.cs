@@ -1,44 +1,47 @@
-﻿using Auction.Core.Repository.Common.Context;
+﻿using Auction.Core.Middleware.Service.DomainEvents;
+using Auction.Core.Repository.Common.Context;
 using Auction.Core.Repository.Common.Interface.UnitOfWork;
 using MediatR;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
+
 
 namespace Auction.Core.Repository.Service.Services.UnitOfWork
 {
     public class BaseUnitOfWork<T> : IBaseUnitOfWork where T : BaseDbContext
     {
         protected readonly T _dbContext;
-        private readonly ILogger<BaseUnitOfWork<T>> logger;
-       // private readonly IMediator mediator;
-        private IDbContextTransaction currentTransaction; 
-        public bool HasActiveTransaction => currentTransaction != null;
-        public BaseUnitOfWork(T context, ILogger<BaseUnitOfWork<T>> _logger/*, IMediator mediator*/)
+        private readonly ILogger<BaseUnitOfWork<T>> _logger;
+        private readonly IMediator _mediator;
+        private IDbContextTransaction _currentTransaction; 
+        public bool HasActiveTransaction => _currentTransaction != null;
+        public BaseUnitOfWork(T context, ILogger<BaseUnitOfWork<T>> logger, IMediator mediator)
         {
-            this._dbContext = context; 
-            logger = _logger;
-            currentTransaction = _dbContext.Database.BeginTransaction();
+            _dbContext = context; 
+            _logger = logger;
+            _currentTransaction = _dbContext.Database.BeginTransaction(); 
+            _mediator = mediator;
         }
-        public IDbContextTransaction GetCurrentTransaction() => currentTransaction;
+        public IDbContextTransaction GetCurrentTransaction() => _currentTransaction;
 
         public async Task<int> Commit(CancellationToken cancellation = default)
         {
             try
             {
-                logger.LogInformation($"Saving Changes. Transaction Id: {this.currentTransaction.TransactionId}");
+                _logger.LogInformation($"Saving Changes. Transaction Id: {_currentTransaction.TransactionId}");
 
-                //await mediator.DispatchDomainEventsAsync(_dbContext);
+                await _mediator.DispatchDomainEventsAsync(_dbContext);
 
                 int hasChanges = await _dbContext.SaveChangesAsync(cancellation);
-                await currentTransaction.CommitAsync(cancellation);
+                await _currentTransaction.CommitAsync(cancellation);
 
-                logger.LogInformation($"Transaction Id: {this.currentTransaction.TransactionId}, {hasChanges} changes committed!");
+                _logger.LogInformation($"Transaction Id: {_currentTransaction.TransactionId}, {hasChanges} changes committed!");
 
                 return hasChanges; 
             }
             catch (Exception ex)
             {
-                logger.LogCritical($"Error occured at commiting changes. Transaction Id: {this.currentTransaction.TransactionId}.\n Ex: {ex}\n Stack Trace: {ex.StackTrace} ");
+                _logger.LogCritical($"Error occured at commiting changes. Transaction Id: {_currentTransaction.TransactionId}.\n Ex: {ex}\n Stack Trace: {ex.StackTrace} ");
                 this.RollbackTransaction();
                 throw;
             }
@@ -48,21 +51,21 @@ namespace Auction.Core.Repository.Service.Services.UnitOfWork
         {
             try
             {
-                currentTransaction?.Rollback();
+                _currentTransaction?.Rollback();
             }
             finally
             {
-                if (currentTransaction != null)
+                if (_currentTransaction != null)
                 {
-                    currentTransaction.Dispose();
-                    currentTransaction = default;
+                    _currentTransaction.Dispose();
+                    _currentTransaction = default;
                 }
             }
         }
 
         public async void Dispose()
         {
-            logger.LogInformation($"Disposing UnitOfWork.{_dbContext.GetType().FullName}"); 
+            _logger.LogInformation($"Disposing UnitOfWork.{_dbContext.GetType().FullName}"); 
             await _dbContext.DisposeAsync();
         }
     }

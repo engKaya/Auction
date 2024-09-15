@@ -1,6 +1,5 @@
-﻿using Auction.Core.Base.Common.Assembly;
+﻿using Auction.Core.Base.Common.AssemblyBuilders;
 using Auction.Core.Base.Common.Helpers;
-using Microsoft.Extensions.Logging;
 using System.Reflection;
 
 namespace Auction.Core.Host.Service.Helpers

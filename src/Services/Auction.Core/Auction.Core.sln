@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auction.Core.Base", "Auctio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.Core.Base.Common", "Auction.Core.Base\Auction.Core.Base.Common\Auction.Core.Base.Common.csproj", "{785593F6-09FF-487C-81C2-7F9A4505AEB7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Aucion.Core.Host", "Aucion.Core.Host", "{E67EADC4-8DD8-401D-968A-29B0C7DF0303}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auction.Core.Host", "Auction.Core.Host", "{E67EADC4-8DD8-401D-968A-29B0C7DF0303}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.Core.Host.Service", "Auction.Core.Host\Auction.Core.Host.Service\Auction.Core.Host.Service.csproj", "{602C4E02-EB69-4DD5-B807-55927E7D6704}"
 EndProject
@@ -21,11 +21,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.Core.Host.Presentat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auction.Core.Logging", "Auction.Core.Logging", "{C2CC7612-D3A8-4716-AD4E-6B183D62098D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auction.Core.Logging.Common", "Auction.Core.Logging\Auction.Core.Logging.Common\Auction.Core.Logging.Common.csproj", "{9DF74CCF-B048-43D9-9202-39B8A8E139DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.Core.Logging.Common", "Auction.Core.Logging\Auction.Core.Logging.Common\Auction.Core.Logging.Common.csproj", "{9DF74CCF-B048-43D9-9202-39B8A8E139DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auction.Core.Logging.Service", "Auction.Core.Logging\Auction.Core.Logging.Service\Auction.Core.Logging.Service.csproj", "{317DB54B-9E34-441C-978E-00352DFA8AF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.Core.Logging.Service", "Auction.Core.Logging\Auction.Core.Logging.Service\Auction.Core.Logging.Service.csproj", "{317DB54B-9E34-441C-978E-00352DFA8AF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auction.Core.Host.Common", "Auction.Core.Host\Auction.Core.Host.Common\Auction.Core.Host.Common.csproj", "{B2A842BD-1A28-4975-A1B1-72F7DD01136D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.Core.Host.Common", "Auction.Core.Host\Auction.Core.Host.Common\Auction.Core.Host.Common.csproj", "{B2A842BD-1A28-4975-A1B1-72F7DD01136D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auction.Core.Middleware", "Auction.Core.Middleware", "{0BAAE848-A4C1-4959-89C9-2BB1C6942B82}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.Core.Middleware.Common", "Auction.Core.Middleware\Auction.Core.Middleware.Common\Auction.Core.Middleware.Common.csproj", "{2F6AECBA-D3C7-4C11-AF86-1D6FD67FA965}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auction.Core.Middleware.Service", "Auction.Core.Middleware\Auction.Core.Middleware.Service\Auction.Core.Middleware.Service.csproj", "{87991533-41E8-4BF0-9C51-F6EB60B64D0C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +71,14 @@ Global
 		{B2A842BD-1A28-4975-A1B1-72F7DD01136D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2A842BD-1A28-4975-A1B1-72F7DD01136D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2A842BD-1A28-4975-A1B1-72F7DD01136D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F6AECBA-D3C7-4C11-AF86-1D6FD67FA965}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F6AECBA-D3C7-4C11-AF86-1D6FD67FA965}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F6AECBA-D3C7-4C11-AF86-1D6FD67FA965}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F6AECBA-D3C7-4C11-AF86-1D6FD67FA965}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87991533-41E8-4BF0-9C51-F6EB60B64D0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87991533-41E8-4BF0-9C51-F6EB60B64D0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87991533-41E8-4BF0-9C51-F6EB60B64D0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87991533-41E8-4BF0-9C51-F6EB60B64D0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,6 +92,8 @@ Global
 		{9DF74CCF-B048-43D9-9202-39B8A8E139DF} = {C2CC7612-D3A8-4716-AD4E-6B183D62098D}
 		{317DB54B-9E34-441C-978E-00352DFA8AF1} = {C2CC7612-D3A8-4716-AD4E-6B183D62098D}
 		{B2A842BD-1A28-4975-A1B1-72F7DD01136D} = {E67EADC4-8DD8-401D-968A-29B0C7DF0303}
+		{2F6AECBA-D3C7-4C11-AF86-1D6FD67FA965} = {0BAAE848-A4C1-4959-89C9-2BB1C6942B82}
+		{87991533-41E8-4BF0-9C51-F6EB60B64D0C} = {0BAAE848-A4C1-4959-89C9-2BB1C6942B82}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C3BFA501-DA54-41CF-96CA-03E3966F5963}

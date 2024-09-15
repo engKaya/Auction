@@ -7,11 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Auction.Core.Logging.Common\Auction.Core.Logging.Common.csproj" />
+    <Folder Include="Infastructure\" />
   </ItemGroup>
 
 </Project>

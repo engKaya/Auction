@@ -6,6 +6,8 @@ namespace Auction.Core.Host.Presentation
     {
         public static void ConfigureHostServices(this IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+
             services 
                 .FindConfigurersAndExecute()
                 .FindAssemblyBuildersAndExecute()

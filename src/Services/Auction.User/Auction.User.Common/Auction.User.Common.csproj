@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Auction.Core\Auction.Core.Logging\Auction.Core.Logging.Common\Auction.Core.Logging.Common.csproj" />
     <ProjectReference Include="..\..\Auction.Core\Auction.Core.Repository\Auction.Core.Repository.Service\Auction.Core.Repository.Service.csproj" />
     <ProjectReference Include="..\Auction.User.Base\Auction.User.Base.csproj" />
   </ItemGroup>

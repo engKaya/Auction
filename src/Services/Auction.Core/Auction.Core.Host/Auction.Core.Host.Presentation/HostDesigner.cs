@@ -8,7 +8,7 @@ namespace Auction.Core.Host.Presentation
 {
     public static class HostDesigner
     {
-        public static IHost DesignHost(this IHost host)
+        public static WebApplication DesignHost(this WebApplication host)
         {
             host.
                 MigrateDb().
@@ -16,7 +16,7 @@ namespace Auction.Core.Host.Presentation
 
             return host;
         }
-        private static IHost MigrateDb(this IHost host)
+        private static WebApplication MigrateDb(this WebApplication host)
         {
             var assemblies = AssemblyBuilderHelper.GetAssembliesFromDll().FindAll(x => x.FullName.Contains("Base") && !x.FullName.Contains("Core"));
             

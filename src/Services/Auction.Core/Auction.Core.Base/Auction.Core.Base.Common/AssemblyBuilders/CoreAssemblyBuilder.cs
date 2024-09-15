@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Auction.Core.Base.Common.Assembly
+namespace Auction.Core.Base.Common.AssemblyBuilders
 {
     public abstract class CoreAssemblyBuilder
     {

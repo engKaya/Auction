@@ -32,12 +32,12 @@ namespace Auction.Core.Repository.Service.Services.Migrate
                             });
                     retry.Execute(() => InvokeSeeder(seeder, context, services));
 
-                    logger.LogInformation($"Migrated Database associated with context db: {typeof(TContext).Name}");
+                    logger.LogInformation($"Migrated Database associated with context db: {ContextType.Name}");
 
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError($"An Error Occured While Migrating {typeof(TContext).Name}! Ex: {ex.Message}");
+                    logger.LogError($"An Error Occured While Migrating {ContextType.Name}! Ex: {ex.Message}");
                 }
             }
         }

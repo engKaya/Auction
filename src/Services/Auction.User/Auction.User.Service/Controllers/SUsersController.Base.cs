@@ -1,7 +1,7 @@
-﻿using Auction.User.Common.Infastructure.UnitOfWork;
-using Auction.User.Entity.User;
+﻿using Auction.Core.Logging.Common.Interfaces;
+using Auction.User.Domain.Service.Handlers.Commands.RegisterUser;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Auction.User.Service.Controllers
 {
@@ -9,27 +9,17 @@ namespace Auction.User.Service.Controllers
     [ApiController]
     public partial class SUsersController : ControllerBase 
     { 
-        ILogger<SUsersController> _logger;
-        IUserServiceUnitOfWork _unitOfWork;
-
-        public SUsersController(ILogger<SUsersController> logger, IUserServiceUnitOfWork unitOfWork)
-        {
-            this._logger = logger;
-            this._unitOfWork = unitOfWork;
+        IMediator mediator;
+        public SUsersController(IMediator mediator)
+        {    
+            this.mediator = mediator;
         }
 
-        [HttpGet]
-        public Task<IActionResult> GetUsers()   
-        {
-            var user = new UserEntity();
-            user.Email = "ibrahimsabitkaya@gmail.com";
-
-            _unitOfWork.UserRepository.Add(user);
-            _unitOfWork.Commit();
-
-
-            var users = _unitOfWork.UserRepository.GetAll();
-            return Task.FromResult<IActionResult>(Ok(users));
+        [HttpPost]
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserCommand command)
+        { 
+            await mediator.Send(command);
+            return Ok(); 
         }
     }
 }

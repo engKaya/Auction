@@ -1,4 +1,4 @@
-﻿namespace Auction.Core.Base.Common.Assembly
+﻿namespace Auction.Core.Base.Common.AssemblyBuilders
 {
     public class CustomAssemblyPathInfo
     {

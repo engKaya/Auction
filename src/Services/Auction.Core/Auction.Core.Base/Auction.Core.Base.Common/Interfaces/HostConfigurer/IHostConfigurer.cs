@@ -1,10 +1,9 @@
-﻿using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Builder;
 
 namespace Auction.Core.Base.Common.Interfaces.HostConfigurer
 {
     public interface IHostConfigurer
     {
-        void Configure(IHost hostBuilder);
+        void Configure(WebApplication hostBuilder);
     }
 }
