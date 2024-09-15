@@ -5,6 +5,7 @@ using Auction.Core.Repository.Common.Interface.UnitOfWork;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using System.Diagnostics;
 
 
 namespace Auction.Core.Repository.Service.Services.UnitOfWork
@@ -29,8 +30,10 @@ namespace Auction.Core.Repository.Service.Services.UnitOfWork
 
         public async Task<int> Commit(CancellationToken cancellation = default)
         {
+            var timer = Stopwatch.StartNew();
             try
             {
+
                 _trace.Log($"Saving Changes. Transaction Id: {_currentTransaction.TransactionId}, CallContext Id: {_callContext.ContextId}");
 
                 await _mediator.DispatchDomainEventsAsync(_dbContext);
@@ -38,13 +41,17 @@ namespace Auction.Core.Repository.Service.Services.UnitOfWork
                 int hasChanges = await _dbContext.SaveChangesAsync(cancellation);
                 await _currentTransaction.CommitAsync(cancellation);
 
-                _trace.Log($"Transaction Id: {_currentTransaction.TransactionId}, {hasChanges} changes committed!, CallContext Id: {_callContext.ContextId}");
+                timer.Stop();
+                _trace.Log($"Transaction Id: {_currentTransaction.TransactionId}, {hasChanges} changes committed!, CallContext Id: {_callContext.ContextId}, Total elapsed: {timer.ElapsedMilliseconds} ms");
 
                 return hasChanges;
             }
             catch (Exception ex)
             {
-                _trace.Log($"Error occured at commiting changes, CallContext Id: {_callContext.ContextId}. Transaction Id: {_currentTransaction.TransactionId}.\n Ex: {ex}\n Stack Trace: {ex.StackTrace} ");
+                if (timer.IsRunning)
+                    timer.Stop();
+
+                _trace.Log($"Error occured at commiting changes, CallContext Id: {_callContext.ContextId}. Transaction Id: {_currentTransaction.TransactionId}.\n Ex: {ex}\n Stack Trace: {ex.StackTrace}, total elapsed: {timer.ElapsedMilliseconds} ms");
                 this.RollbackTransaction();
                 throw;
             }

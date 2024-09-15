@@ -1,6 +1,7 @@
 ﻿using Auction.Core.Base.Common.Constants;
 using Auction.Core.Base.Common.Interfaces.HostConfigurer;
 using Auction.Core.Base.Common.Interfaces.ServiceConfigurers;
+using Auction.Core.Middleware.Service.Services.Filters;
 using Auction.Core.Middleware.Service.Services.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,8 +19,7 @@ namespace Auction.Core.Middleware.Service.HostConfigurer
                     context.Request.Headers.Add(HttpHeaderConstants.XRequestId, Guid.NewGuid().ToString());
                 } 
                 await next.Invoke();
-            });
-
+            }); 
             app.UseMiddleware<RequestHandlerMiddleware>();
         }
     }
@@ -28,6 +28,10 @@ namespace Auction.Core.Middleware.Service.HostConfigurer
     {
         public void Configure(IServiceCollection services)
         {
+            services.AddControllers(options =>
+            {
+                options.Filters.Add<TimerFilter>();
+            });
         }
     }
 }

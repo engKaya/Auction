@@ -31,7 +31,7 @@ namespace Auction.Core.Logging.Service
 
             services.AddSerilog((Action<LoggerConfiguration>)(cfg =>
             {
-                cfg.MinimumLevel.Information()
+                cfg.MinimumLevel.Debug()
                     .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", Serilog.Events.LogEventLevel.Warning)
                     .Enrich.FromLogContext()
                     .Enrich.WithProcessId()

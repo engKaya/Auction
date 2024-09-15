@@ -20,8 +20,7 @@ namespace Auction.Core.Host.Service.HostExtensions
                 if (!types.Any())
                     continue;
 
-
-                //logger.LogInformation($"{types.Count()} Controller found in {assembly.FullName}");
+                
                 serviceAssemblies.Add(assembly);
             } 
             

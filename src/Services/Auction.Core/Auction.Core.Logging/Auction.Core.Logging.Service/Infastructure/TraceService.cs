@@ -30,7 +30,8 @@ namespace Auction.Core.Logging.Service.Infastructure
                 }
             }
 
-            logItem.Message += $"|Properties: {stringProperties}";
+            if (!string.IsNullOrEmpty(stringProperties)) 
+                logItem.Message += $"|Properties: {stringProperties}";
 
             action(logItem.Exception, logItem.Message, new object[] { logItem.Request, logItem.Response });
         } 
