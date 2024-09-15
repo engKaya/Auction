@@ -12,6 +12,6 @@ namespace Auction.Core.Logging.Service.Enrichers
         {
             _callContext = callContext;
         }
-        public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory) => logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty(HttpHeaderConstants.XRequestId, _callContext?.GetContextId()));
+        public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory) => logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty(HttpHeaderConstants.XRequestId, _callContext?.ContextId));
     } 
 }

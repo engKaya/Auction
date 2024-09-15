@@ -3,6 +3,7 @@
     public interface IBaseUnitOfWork : IDisposable
     {
         Task<int> Commit(CancellationToken cancellation = default);
-        void RollbackTransaction();
+        void RollbackTransaction(); 
+        void ExecuteDbCommand(string spName);
     }
 }

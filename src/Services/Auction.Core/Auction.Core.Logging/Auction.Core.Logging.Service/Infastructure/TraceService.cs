@@ -16,7 +16,7 @@ namespace Auction.Core.Logging.Service.Infastructure
         public TraceService(ILogger<LogItem> logger, ICallContext _callContext)
         {
             _logger = logger;
-            RequestId = _callContext.GetContextId();
+            RequestId = _callContext.ContextId;
             setLogAction(Environment.GetEnvironmentVariable(EnviromentConstants.LOG_LEVEL));
         }
         public void Log(LogItem logItem)

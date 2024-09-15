@@ -39,7 +39,7 @@ namespace Auction.Core.Middleware.Service.Services.Middlewares
 
                 parameters.ToList().ForEach(async parameter =>
                 {
-                    if (parameter.ParameterType == typeof(BaseRequest))
+                    if (parameter.ParameterType.BaseType == typeof(BaseRequest))
                     {
                         var request = context.Request;
                         var body = request.Body;
@@ -51,9 +51,10 @@ namespace Auction.Core.Middleware.Service.Services.Middlewares
                         if (rawRequest != null)
                         {
                             BaseRequest baseRequest  = (BaseRequest)rawRequest;
-                            baseRequest.RequestId = _callContext.GetContextId();
+                            baseRequest.RequestId = _callContext.ContextId;
+                            context.Request.Body = new MemoryStream(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(baseRequest)));
+                            context.Request.ContentLength = context.Request.Body.Length;
                         }
-                        request.Body = buffer;
                     }
                 });
             }

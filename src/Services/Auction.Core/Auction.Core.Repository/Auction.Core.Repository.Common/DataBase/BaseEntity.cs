@@ -9,6 +9,7 @@ namespace Auction.Core.Repository.Common.DataBase
         private DateTime _updatedAt;
         private string _createdBy = string.Empty;
         private string _updatedBy = string.Empty;
+        private string _requestId = string.Empty;
         private bool _isDeleted;
 
         public DateTime CreatedAt { get => _createdAt; set => _createdAt = value; }
@@ -16,6 +17,7 @@ namespace Auction.Core.Repository.Common.DataBase
         public string CreatedBy { get => _createdBy; set => _createdBy = value; }
         public string UpdatedBy { get => _updatedBy; set => _updatedBy = value; }
         public bool IsDeleted { get => _isDeleted; set => _isDeleted = value; } 
+        public string RequestId { get => _requestId; set => _requestId = value; }
 
         private IList<INotification>? domainEvents;
         public IReadOnlyCollection<INotification> DomainEvents => domainEvents?.ToList() ?? []; 

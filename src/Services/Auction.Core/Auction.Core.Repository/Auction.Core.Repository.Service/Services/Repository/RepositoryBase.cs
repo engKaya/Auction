@@ -1,4 +1,5 @@
-﻿using Auction.Core.Repository.Common.Entity;
+﻿using Auction.Core.Logging.Common.Interfaces;
+using Auction.Core.Repository.Common.Entity;
 using Auction.Core.Repository.Common.Interface.BaseEntity;
 using Auction.Core.Repository.Common.Interface.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -9,18 +10,31 @@ namespace Auction.Core.Repository.Service.Services.Repository
     public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class, IBaseEntity
     {
         private readonly DbContext _dbContext;
-        public RepositoryBase(DbContext dbContext)
+        private readonly ICallContext _callContext;
+        public RepositoryBase(DbContext dbContext, ICallContext callContext)
         {
             this._dbContext = dbContext;
+            this._callContext = callContext;
         }
 
         public void Add(TEntity entity)
         { 
             entity.CreatedAt = DateTime.Now;
             entity.UpdatedAt = DateTime.MinValue;
+            entity.RequestId = _callContext.ContextId; 
 
             _dbContext.Set<TEntity>().Add(entity);
             _dbContext.SaveChanges();
+        }
+
+        public async Task AddAsync(TEntity entity)
+        {
+            entity.CreatedAt = DateTime.Now;
+            entity.UpdatedAt = DateTime.MinValue;
+            entity.RequestId = _callContext.ContextId; 
+
+            await _dbContext.Set<TEntity>().AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
         }
 
         public void AddMany(IEnumerable<TEntity> entities)
@@ -29,6 +43,7 @@ namespace Auction.Core.Repository.Service.Services.Repository
             {
                 entity.CreatedAt = DateTime.Now;
                 entity.UpdatedAt = DateTime.MinValue;
+                entity.RequestId = _callContext.ContextId;
             }
 
             _dbContext.Set<TEntity>().AddRange(entities);

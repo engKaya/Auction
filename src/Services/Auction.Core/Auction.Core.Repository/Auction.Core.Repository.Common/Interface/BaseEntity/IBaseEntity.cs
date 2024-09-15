@@ -6,6 +6,7 @@
         DateTime UpdatedAt { get; set; }
         string CreatedBy { get; set; }
         string UpdatedBy { get; set; }
+        string RequestId { get; set; }
         bool IsDeleted { get; set; } 
     }
 }

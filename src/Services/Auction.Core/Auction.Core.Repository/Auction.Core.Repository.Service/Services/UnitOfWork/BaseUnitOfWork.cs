@@ -1,9 +1,10 @@
-﻿using Auction.Core.Middleware.Service.DomainEvents;
+﻿using Auction.Core.Logging.Common.Interfaces;
+using Auction.Core.Middleware.Service.DomainEvents;
 using Auction.Core.Repository.Common.Context;
 using Auction.Core.Repository.Common.Interface.UnitOfWork;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Logging;
 
 
 namespace Auction.Core.Repository.Service.Services.UnitOfWork
@@ -11,19 +12,18 @@ namespace Auction.Core.Repository.Service.Services.UnitOfWork
     public class BaseUnitOfWork<T> : IBaseUnitOfWork where T : BaseDbContext
     {
         protected readonly T _dbContext;
-
-        private readonly ILogger<BaseUnitOfWork<T>> _logger;
-
+        private readonly ITraceService _trace;
         private readonly IMediator _mediator;
-
-        private IDbContextTransaction _currentTransaction; 
+        protected readonly ICallContext _callContext;
+        private IDbContextTransaction _currentTransaction;
         public bool HasActiveTransaction => _currentTransaction != null;
-        public BaseUnitOfWork(T context, ILogger<BaseUnitOfWork<T>> logger, IMediator mediator)
+        public BaseUnitOfWork(T context, ITraceService trace, IMediator mediator, ICallContext callContext)
         {
-            _dbContext = context; 
-            _logger = logger;
-            _currentTransaction = _dbContext.Database.BeginTransaction(); 
+            _dbContext = context;
+            _trace = trace;
+            _currentTransaction = _dbContext.Database.BeginTransaction();
             _mediator = mediator;
+            _callContext = callContext;
         }
         public IDbContextTransaction GetCurrentTransaction() => _currentTransaction;
 
@@ -31,20 +31,20 @@ namespace Auction.Core.Repository.Service.Services.UnitOfWork
         {
             try
             {
-                _logger.LogInformation($"Saving Changes. Transaction Id: {_currentTransaction.TransactionId}");
+                _trace.Log($"Saving Changes. Transaction Id: {_currentTransaction.TransactionId}, CallContext Id: {_callContext.ContextId}");
 
                 await _mediator.DispatchDomainEventsAsync(_dbContext);
 
                 int hasChanges = await _dbContext.SaveChangesAsync(cancellation);
                 await _currentTransaction.CommitAsync(cancellation);
 
-                _logger.LogInformation($"Transaction Id: {_currentTransaction.TransactionId}, {hasChanges} changes committed!");
+                _trace.Log($"Transaction Id: {_currentTransaction.TransactionId}, {hasChanges} changes committed!, CallContext Id: {_callContext.ContextId}");
 
-                return hasChanges; 
+                return hasChanges;
             }
             catch (Exception ex)
             {
-                _logger.LogCritical($"Error occured at commiting changes. Transaction Id: {_currentTransaction.TransactionId}.\n Ex: {ex}\n Stack Trace: {ex.StackTrace} ");
+                _trace.Log($"Error occured at commiting changes, CallContext Id: {_callContext.ContextId}. Transaction Id: {_currentTransaction.TransactionId}.\n Ex: {ex}\n Stack Trace: {ex.StackTrace} ");
                 this.RollbackTransaction();
                 throw;
             }
@@ -68,8 +68,14 @@ namespace Auction.Core.Repository.Service.Services.UnitOfWork
 
         public async void Dispose()
         {
-            _logger.LogInformation($"Disposing UnitOfWork.{_dbContext.GetType().FullName}"); 
+            _trace.Log($"Disposing UnitOfWork.{_dbContext.GetType().FullName}, CallContext Id: {_callContext.ContextId}");
             await _dbContext.DisposeAsync();
+        }
+
+        public void ExecuteDbCommand(string spName)
+        {
+            _trace.Log($"Executing Db Command: {spName}, CallContext Id: {_callContext.ContextId}");
+            _dbContext.Database.ExecuteSqlRaw(spName);
         }
     }
 }

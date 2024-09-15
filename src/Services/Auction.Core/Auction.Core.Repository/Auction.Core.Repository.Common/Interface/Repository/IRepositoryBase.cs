@@ -10,6 +10,7 @@ namespace Auction.Core.Repository.Common.Interface.Repository
         TEntity? FindOne(Expression<Func<TEntity, bool>> predicate, FindingOptions? findOptions = null);
         IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, FindingOptions? findOptions = null);
         void Add(TEntity entity);
+        Task AddAsync(TEntity entity);
         void AddMany(IEnumerable<TEntity> entities);
         void Update(TEntity entity);
         void Delete(TEntity entity);
