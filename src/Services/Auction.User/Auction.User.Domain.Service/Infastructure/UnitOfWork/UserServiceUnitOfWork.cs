@@ -23,5 +23,15 @@ namespace Auction.User.Domain.Service.Infastructure.UnitOfWork
                 return userRepository;
             }
         }
+
+        private IUserPhoneRepository userPhoneRepository;
+        public IUserPhoneRepository UserPhoneRepository
+        {
+            get
+            {
+                userPhoneRepository = new UserPhoneRepository(this._dbContext);
+                return userPhoneRepository;
+            }
+        }
     }
 }

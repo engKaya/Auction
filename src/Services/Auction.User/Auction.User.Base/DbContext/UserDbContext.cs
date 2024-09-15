@@ -12,10 +12,12 @@ namespace Auction.User.Base.DbContext
         }
          
 
-        public DbSet<UserEntity> Users { get; set; }
+        public DbSet<UserPhoneEntity> Users { get; set; }
+        public DbSet<UserPhoneEntity> UserPhones { get; set; }
         public override void GetConfigureServiceModels(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new UserPhoneEntityConfiguration());
         }
 
         public override void SetModuleCode()

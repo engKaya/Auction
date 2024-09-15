@@ -2,7 +2,6 @@
 using Auction.User.Base.DbContext;
 using Auction.User.Common.Infastructure.Repository;
 using Auction.User.Entity.User;
-using Microsoft.EntityFrameworkCore;
 
 namespace Auction.User.Domain.Service.Infastructure.Repository
 {

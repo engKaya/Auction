@@ -17,6 +17,7 @@ namespace Auction.Core.Middleware.Service.Services.Middlewares
         {
             _recyclableMemoryStreamManager =    new RecyclableMemoryStreamManager(new RecyclableMemoryStreamManager.Options() { 
                  AggressiveBufferReturn = true,
+                 LargeBufferMultiple    = 2,
                  BlockSize = 1024,
                  MaximumBufferSize = 1024 * 64,
                  MaximumLargePoolFreeBytes = 1024 * 1024,

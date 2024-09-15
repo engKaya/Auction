@@ -8,6 +8,7 @@ namespace Auction.User.Entity.User
         private string _email;
 
         public int Id { get => _id; set => _id = value; }
-        public string Email { get => _email; set => _email = value; }
+        public string Email { get => _email; set => _email = value; } 
+        public List<UserPhoneEntity> UserPhone { get; set; } = new List<UserPhoneEntity>(); 
     }
 }

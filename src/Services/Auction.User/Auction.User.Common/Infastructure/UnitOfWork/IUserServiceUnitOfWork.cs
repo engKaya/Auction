@@ -6,5 +6,6 @@ namespace Auction.User.Common.Infastructure.UnitOfWork
     public interface IUserServiceUnitOfWork : IBaseUnitOfWork
     {
         IUserRepository UserRepository { get; }
+        IUserPhoneRepository UserPhoneRepository { get; }
     }
 }

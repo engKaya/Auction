@@ -2,7 +2,6 @@
 using Auction.Core.Repository.Common.Interface.Repository;
 using Auction.Core.Repository.Service.Services.Repository;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Auction.Core.Repository.Service.Services
 {

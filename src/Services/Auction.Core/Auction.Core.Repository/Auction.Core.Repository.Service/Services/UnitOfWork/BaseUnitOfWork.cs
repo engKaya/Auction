@@ -11,8 +11,11 @@ namespace Auction.Core.Repository.Service.Services.UnitOfWork
     public class BaseUnitOfWork<T> : IBaseUnitOfWork where T : BaseDbContext
     {
         protected readonly T _dbContext;
+
         private readonly ILogger<BaseUnitOfWork<T>> _logger;
+
         private readonly IMediator _mediator;
+
         private IDbContextTransaction _currentTransaction; 
         public bool HasActiveTransaction => _currentTransaction != null;
         public BaseUnitOfWork(T context, ILogger<BaseUnitOfWork<T>> logger, IMediator mediator)
