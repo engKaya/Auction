@@ -1,45 +1,38 @@
 ﻿using Auction.Core.Base.Common;
-using Auction.Core.Base.Common.Constants;
 using Auction.Core.Logging.Common.Classes;
 using Auction.Core.Logging.Common.Constants;
 using Auction.Core.Logging.Common.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using System.Net.Http;
 
 namespace Auction.Core.Logging.Service.Infastructure
 {
-    public class TraceService : ITraceService
+    public sealed class TraceService : ITraceService
     {
-        ILogger<LogItem> _logger;
+        ILogger<LogItem> _logger; 
         private readonly string RequestId;
         private Action<Exception?, string?, object[]> action;
 
 
-        public TraceService(ILogger<LogItem> logger, IHttpContextAccessor accessor)
+        public TraceService(ILogger<LogItem> logger, ICallContext _callContext)
         {
             _logger = logger;
-            RequestId = accessor.HttpContext.Request.Headers[HttpHeaderConstants.XRequestId].ToString() ?? Guid.NewGuid().ToString();
+            RequestId = _callContext.GetContextId();
             setLogAction(Environment.GetEnvironmentVariable(EnviromentConstants.LOG_LEVEL));
         }
         public void Log(LogItem logItem)
-        {
-            var logProperties = new Dictionary<string, object>
-            {
-                { "RequestId", RequestId },
-                { "ModuleName", Environment.GetEnvironmentVariable(EnviromentConstants.MODULE_NAME) },
-                { "Environment", Environment.GetEnvironmentVariable(EnviromentConstants.ENVIRONMENT) }
-            };
-
+        {  
+            var stringProperties = string.Empty;
             if (logItem.Properties != null)
             {
                 foreach (var prop in logItem.Properties)
-                {
-                    logProperties.Add(prop.Key, prop.Value);
+                { 
+                    stringProperties += $"{prop.Key}: {prop.Value}|";
                 }
             }
 
-            action(logItem.Exception, logItem.Message, new object[] { logItem.Request, logItem.Response, logProperties });
+            logItem.Message += $"|Properties: {stringProperties}";
+
+            action(logItem.Exception, logItem.Message, new object[] { logItem.Request, logItem.Response });
         } 
         public void Log(string message)
         {

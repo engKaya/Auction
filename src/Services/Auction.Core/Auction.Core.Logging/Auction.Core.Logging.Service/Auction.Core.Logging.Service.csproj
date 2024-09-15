@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Auction.Core.Middleware\Auction.Core.Middleware.Common\Auction.Core.Middleware.Common.csproj" />
     <ProjectReference Include="..\Auction.Core.Logging.Common\Auction.Core.Logging.Common.csproj" />
   </ItemGroup>
 

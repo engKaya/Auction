@@ -18,4 +18,8 @@
     <ProjectReference Include="..\..\Auction.Core.Logging\Auction.Core.Logging.Common\Auction.Core.Logging.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>

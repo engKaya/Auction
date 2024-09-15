@@ -4,8 +4,7 @@ namespace Auction.Core.Logging.Common.Interfaces
 {
     public interface ITraceService
     {
-        void Log(LogItem logItem);
-        
+        void Log(LogItem logItem); 
         void Log(string message);
         void Log(string message, Exception exception);
         void Log(string message, object request, Exception exception);
