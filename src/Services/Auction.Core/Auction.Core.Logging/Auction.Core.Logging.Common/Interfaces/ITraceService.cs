@@ -13,5 +13,6 @@ namespace Auction.Core.Logging.Common.Interfaces
         void Log(string message, object request, object response, Dictionary<string, object> properties); 
         void Log(string message, object request, object response, string key, object prop); 
         void Log(string message, object request, object response, string key1, object prop1, string key2, object prop2); 
+
     }
 }

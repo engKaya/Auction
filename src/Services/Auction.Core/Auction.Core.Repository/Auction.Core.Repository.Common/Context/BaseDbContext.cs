@@ -10,18 +10,13 @@ namespace Auction.Core.Repository.Common.Context
         public BaseDbContext(DbContextOptions options) : base(options)
         {
         }
-         
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         { 
             GetConfigureServiceModels(modelBuilder);
             base.OnModelCreating(modelBuilder);
         }
-
         public abstract void GetConfigureServiceModels(ModelBuilder modelBuilder);
-
         public abstract void SetSchemaName();
-
         public void SetSchemaName(string schemaName) => _schemaName = schemaName;
         public abstract void SetModuleCode();
         public void SetModuleCode(string moduleCode) => _moduleCode = moduleCode;
