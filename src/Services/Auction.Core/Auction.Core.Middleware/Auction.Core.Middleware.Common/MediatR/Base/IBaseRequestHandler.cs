@@ -5,7 +5,7 @@ namespace Auction.Core.Middleware.Common.MediatR.Base
 {
     public interface IBaseRequestHandler<TRequest,TResponse> : IRequestHandler<TRequest, TResponse>
         where TRequest : BaseRequest,IRequest<TResponse>
-        where TResponse : BaseResponse<TResponse> 
+        where TResponse : BaseResponse 
     {
 
     }

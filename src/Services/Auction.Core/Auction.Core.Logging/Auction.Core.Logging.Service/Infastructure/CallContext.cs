@@ -28,8 +28,8 @@ namespace Auction.Core.Logging.Service.Infastructure
 
         private string getContextId()
         {
-            var contextId = _contextAccessor.HttpContext?.Request.Headers[HttpHeaderConstants.XRequestId].ToString()  ??  _contextAccessor.HttpContext?.TraceIdentifier ;
-            return string.IsNullOrEmpty(contextId) ? "No Request Id Available" : contextId;
+            var contextId = _contextAccessor.HttpContext?.Request.Headers[HttpHeaderConstants.XRequestId].ToString() ?? _contextAccessor.HttpContext?.TraceIdentifier;
+            return string.IsNullOrEmpty(contextId) ? Guid.NewGuid().ToString() : contextId;
         }
 
         public string GetIpAddress()
@@ -50,6 +50,15 @@ namespace Auction.Core.Logging.Service.Infastructure
         public string GetUserName()
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Use with caution, this will generate a new context id
+        /// </summary>
+        public ICallContext NewContextId()
+        {
+            _contextId = Guid.NewGuid().ToString();
+            return this;
         }
     }
 }

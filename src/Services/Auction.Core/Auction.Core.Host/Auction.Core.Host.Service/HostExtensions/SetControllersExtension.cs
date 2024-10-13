@@ -2,8 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Auction.Core.Host.Service.HostExtensions
 {
@@ -12,7 +15,7 @@ namespace Auction.Core.Host.Service.HostExtensions
         public static IServiceCollection SetControllers(this IServiceCollection services)
         {
             var assemblies = AssemblyBuilderHelper.GetAssembliesFromDll().FindAll(x => x.FullName.Contains("Service") && !x.FullName.Contains("Core") && !x.FullName.Contains("Domain"));
-            List<Assembly> serviceAssemblies  = new List<Assembly>();
+            List<Assembly> serviceAssemblies = new List<Assembly>();
 
             foreach (var assembly in assemblies)
             {
@@ -20,11 +23,11 @@ namespace Auction.Core.Host.Service.HostExtensions
                 if (!types.Any())
                     continue;
 
-                
+
                 serviceAssemblies.Add(assembly);
-            } 
-            
-            services.AddControllers()
+            }
+
+            services.AddControllers() 
                 .ConfigureApplicationPartManager(x =>
                 {
                     foreach (var item in assemblies)

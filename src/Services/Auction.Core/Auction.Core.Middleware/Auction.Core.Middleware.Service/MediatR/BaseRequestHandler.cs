@@ -1,14 +1,11 @@
 ﻿using Auction.Core.Base.Common.Infastructure;
 using Auction.Core.Logging.Common.Interfaces;
 using Auction.Core.Middleware.Common.MediatR.Base;
-using Azure;
 using MediatR;
-using Microsoft.Extensions.Logging;
-using System.Diagnostics;
 
 namespace Auction.Core.Middleware.Service.MediatR
 {
-    public abstract class BaseRequestHandler<TRequest, TResponse> : IBaseRequestHandler<TRequest, TResponse> where TRequest : BaseRequest, IRequest<TResponse> where TResponse : BaseResponse<TResponse>
+    public abstract class BaseRequestHandler<TRequest, TResponse> : IBaseRequestHandler<TRequest, TResponse> where TRequest : BaseRequest, IRequest<TResponse> where TResponse : BaseResponse 
     {
         private readonly ITraceService _trace;
 

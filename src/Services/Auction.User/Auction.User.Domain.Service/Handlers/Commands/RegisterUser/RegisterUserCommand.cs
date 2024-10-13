@@ -3,14 +3,14 @@ using MediatR;
 
 namespace Auction.User.Domain.Service.Handlers.Commands.RegisterUser
 {
-    public class RegisterUserCommand : BaseRequest, IRequest
+    public class RegisterUserCommand : BaseRequest, IRequest<BaseResponse>
     {
         private string _email = string.Empty;
         private string _password = string.Empty;
         private string _name = string.Empty;
         private string _surname = string.Empty;
         private string _phoneNumber = string.Empty;
-         
+
         public string Email
         {
             get => _email;
@@ -38,6 +38,6 @@ namespace Auction.User.Domain.Service.Handlers.Commands.RegisterUser
         {
             get => _phoneNumber;
             set => _phoneNumber = value;
-        } 
+        }
     }
 }
