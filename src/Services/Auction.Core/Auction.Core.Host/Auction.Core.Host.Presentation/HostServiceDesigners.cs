@@ -1,6 +1,7 @@
 ﻿using Auction.Core.Host.Service.HostExtensions;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace Auction.Core.Host.Presentation
@@ -17,25 +18,37 @@ namespace Auction.Core.Host.Presentation
                     options.JsonSerializerOptions.DictionaryKeyPolicy = null;
                     options.JsonSerializerOptions.IgnoreNullValues = false;
                     options.JsonSerializerOptions.WriteIndented = true;
-                    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.Never;
-
+                    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.Never; 
                 });
+
+            var secretkey = "TooImportantSecretKey2024Auction!!";
+            var signinKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretkey));
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer("Bearer", options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = signinKey,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    RequireExpirationTime = true,
+                    ValidateLifetime = true
+                };
+                //options.Events 
+            }); 
 
             services
                 .FindConfigurersAndExecute()
                 .FindAssemblyBuildersAndExecute()
                 .SetControllers();
-        }
-
-        //private static IServiceCollection ConfigureLogging(this IServiceCollection services)
-        //{
-        //    services.AddLogging(builder =>
-        //    {
-        //        builder.AddConsole();
-        //        builder.AddDebug();
-        //    }).Configure<LoggerFilterOptions>(cfg => cfg.MinLevel = LogLevel.Debug);
-        //    var llog = services.BuildServiceProvider().GetRequiredService<ILogger<Program>>();
-        //    return services;
-        //}
+        } 
     }
 }
