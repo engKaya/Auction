@@ -16,7 +16,7 @@ namespace Auction.Core.Middleware.Service.MediatR
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken)
         { 
-            _trace.Log($"Handling {typeof(TRequest).Name}, Request Id: {request.RequestId}, Request Type: {nameof(request.RequestTypes)}", request );
+            _trace.Log($"Handling {typeof(TRequest).Name}, Request Id: {request.RequestId}, Request Type: {request.RequestTypes}", request );
 
             var response = await HandleRequest(request, cancellationToken);
 
