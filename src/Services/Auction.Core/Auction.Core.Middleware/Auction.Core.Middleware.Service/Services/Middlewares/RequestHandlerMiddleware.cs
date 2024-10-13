@@ -12,28 +12,29 @@ namespace Auction.Core.Middleware.Service.Services.Middlewares
 {
     public class RequestHandlerMiddleware : BaseMiddleware
     {
-        private readonly RecyclableMemoryStreamManager _recyclableMemoryStreamManager; 
+        private readonly RecyclableMemoryStreamManager _recyclableMemoryStreamManager;
         public RequestHandlerMiddleware(RequestDelegate next) : base(next)
         {
-            _recyclableMemoryStreamManager =    new RecyclableMemoryStreamManager(new RecyclableMemoryStreamManager.Options() { 
-                 AggressiveBufferReturn = true,
-                 LargeBufferMultiple    = 2,
-                 BlockSize = 1024,
-                 MaximumBufferSize = 1024 * 64,
-                 MaximumLargePoolFreeBytes = 1024 * 1024,
-                 MaximumSmallPoolFreeBytes = 1024 * 1024,
-                 UseExponentialLargeBuffer = true,
-            }); 
+            _recyclableMemoryStreamManager = new RecyclableMemoryStreamManager(new RecyclableMemoryStreamManager.Options()
+            {
+                AggressiveBufferReturn = true,
+                LargeBufferMultiple = 2,
+                BlockSize = 1024,
+                MaximumBufferSize = 1024 * 64,
+                MaximumLargePoolFreeBytes = 1024 * 1024,
+                MaximumSmallPoolFreeBytes = 1024 * 1024,
+                UseExponentialLargeBuffer = true,
+            });
         }
 
         public override async Task Execute(HttpContext context)
         {
             try
-            { 
+            {
                 var controllerActionDescriptor = context
-                    .GetEndpoint()
+                    .GetEndpoint()?
                     .Metadata
-                     .GetMetadata<ControllerActionDescriptor>();
+                    .GetMetadata<ControllerActionDescriptor>();
 
                 var parameters = controllerActionDescriptor.Parameters;
 
@@ -50,13 +51,14 @@ namespace Auction.Core.Middleware.Service.Services.Middlewares
                         var rawRequest = JsonConvert.DeserializeObject(bodyAsText, parameter.ParameterType);
                         if (rawRequest != null)
                         {
-                            BaseRequest baseRequest  = (BaseRequest)rawRequest;
+                            BaseRequest baseRequest = (BaseRequest)rawRequest;
                             baseRequest.RequestId = _callContext.ContextId;
                             context.Request.Body = new MemoryStream(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(baseRequest)));
                             context.Request.ContentLength = context.Request.Body.Length;
                         }
                     }
                 });
+                await Task.CompletedTask;
             }
             catch (Exception)
             {
