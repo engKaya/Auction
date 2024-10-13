@@ -1,6 +1,7 @@
 ﻿using Auction.Core.Base.Common.Infastructure;
 using Auction.Core.Logging.Common.Interfaces;
 using Auction.User.Domain.Service.Handlers.Commands.RegisterUser;
+using Auction.User.Domain.Service.Handlers.Queries.User;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +25,14 @@ namespace Auction.User.Service.Controllers
         {
 
             var res = await _mediator.Send(command);
+            return Ok(res);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LoginUser([FromBody] LoginQuery query)
+        {
+
+            var res = await _mediator.Send(query);
             return Ok(res);
         }
     }

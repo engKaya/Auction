@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Auction.Core.Base.Common.Infastructure;
+using MediatR;
 
 namespace Auction.User.Domain.Service.Handlers.Queries.User
 {
-    internal class LoginQuery
+    public class LoginQuery : BaseRequest, IRequest<BaseResponse>
     {
+        public string Email { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
     }
 }
