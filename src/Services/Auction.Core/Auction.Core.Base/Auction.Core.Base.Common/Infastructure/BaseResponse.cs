@@ -36,8 +36,9 @@ namespace Auction.Core.Base.Common.Infastructure
         }
     }
 
-    public class BaseResponse<T> : BaseResponse
+    public class BaseResponse<T> : BaseResponse where T : class, new()
     {
-        public T? Data { get; set; } = default;
+
+        public T? Data { get; set; } = new();
     }
 }
