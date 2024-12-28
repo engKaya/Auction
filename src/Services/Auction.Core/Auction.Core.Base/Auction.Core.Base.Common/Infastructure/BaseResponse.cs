@@ -12,7 +12,7 @@ namespace Auction.Core.Base.Common.Infastructure
             get
             {
                 if (string.IsNullOrEmpty(_message))
-                    return $"{ProcessCode.Code} - {ProcessCode.Message}";
+                    return $"{ProcessCode.Message}({ProcessCode.Code})";
 
                 return _message;
             }
