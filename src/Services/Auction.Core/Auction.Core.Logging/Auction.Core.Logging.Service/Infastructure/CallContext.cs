@@ -32,15 +32,9 @@ namespace Auction.Core.Logging.Service.Infastructure
             return string.IsNullOrEmpty(contextId) ? Guid.NewGuid().ToString() : contextId;
         }
 
-        public string GetIpAddress()
-        {
-            throw new NotImplementedException();
-        }
+        public string GetIpAddress() => _contextAccessor.HttpContext?.Connection.RemoteIpAddress?.ToString() ?? "0.0.0.0"; 
 
-        public string GetRequestPath()
-        {
-            throw new NotImplementedException();
-        }
+        public string GetRequestPath() => _contextAccessor.HttpContext?.Request.Path ?? string.Empty;
 
         public string GetUserId()
         {

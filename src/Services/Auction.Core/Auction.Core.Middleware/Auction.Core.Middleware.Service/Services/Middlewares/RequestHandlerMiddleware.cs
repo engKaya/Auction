@@ -1,6 +1,4 @@
-﻿using Auction.Core.Base.Common.Constants;
-using Auction.Core.Base.Common.Infastructure;
-using Auction.Core.Logging.Common.Interfaces;
+﻿using Auction.Core.Base.Common.Infastructure;
 using Auction.Core.Middleware.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Controllers;

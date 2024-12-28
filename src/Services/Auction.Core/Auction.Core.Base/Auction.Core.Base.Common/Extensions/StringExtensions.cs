@@ -4,7 +4,7 @@ namespace Auction.Core.Base.Common.Extensions
 {
     public static class StringExtensions
     {
-        public static string ToCamelCase(this string value) { return value.Substring(0, 1).ToLower() + value.Substring(1); }
+        public static string ToCamelCase(this string value) { return value.Substring(0, 1).ToLower() + value.Substring(1); } 
         public static string RemoveTurkishChars(this string value)
         {
 

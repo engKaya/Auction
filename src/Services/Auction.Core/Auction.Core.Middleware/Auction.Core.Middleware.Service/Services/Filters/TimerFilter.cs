@@ -12,9 +12,10 @@ namespace Auction.Core.Middleware.Service.Services.Filters
         {
             _trace = trace;
         }
-        public override void OnActionExecuting(ActionExecutingContext context)
+        public override async void OnActionExecuting(ActionExecutingContext context)
         {
             _timer = Stopwatch.StartNew();
+            base.OnActionExecuting(context);
         }
         public override void OnActionExecuted(ActionExecutedContext context)
         {
